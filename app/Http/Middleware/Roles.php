@@ -27,7 +27,7 @@ class Roles
             return $next($request);
         }
         
-        if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin') {
+        if (Auth::user()->role == 'M' || Auth::user()->role == 'A') {
             return Redirect::to('dashboard');
         } else {
             return Redirect::to('/');
