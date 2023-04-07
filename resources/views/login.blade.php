@@ -108,12 +108,11 @@
                                         <p class="text-center small">Ruko & Lapangan Stadion Diponegoro Semarang
                                         </p>
                                     </div>
-                                    <form class="row g-3 needs-validation" novalidate action="{{ route('login.auth') }}"
-                                        method="POST">
+                                    <form class="row g-3" novalidate action="{{ route('login.auth') }}" method="POST">
                                         @csrf
                                         <div class="col-12">
                                             <label for="email-username" class="form-label">Email / Username</label>
-                                            <div class="input-group has-validation">
+                                            <div class="input-group">
                                                 <input type="text" name="email-username" id="email-username"
                                                     required autofocus value="{{ old('email-username') }}"
                                                     class="form-control @error('email-username') is-invalid @enderror">
@@ -139,10 +138,6 @@
                             </div>
 
                             <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
                                 Created with ❤️ by <a href="https://m-a-majid36.github.io/">Me</a>
                             </div>
 

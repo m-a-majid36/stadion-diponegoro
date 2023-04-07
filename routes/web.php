@@ -39,11 +39,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['middleware' => 'role:A'], function() {
         #Ruko
-        Route::prefix('ruko')->name('ruko.')->group(function() {
-            // Route::get('/', [RukoController::class, 'index'])->name('index');
-            // Route::get('/create', [RukoController::class, 'create'])->name('index');
-            Route::resource('/', RukoController::class);
-        });
+        Route::resource('ruko', RukoController::class)->except('show', 'create', 'edit');
     });
 });
 
