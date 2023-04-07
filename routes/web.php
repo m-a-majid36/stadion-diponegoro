@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'role:A'], function() {
         #Ruko
         Route::resource('ruko', RukoController::class)->except('show', 'create', 'edit');
+        Route::resource('penyewa', PenyewaController::class);
     });
 });
 

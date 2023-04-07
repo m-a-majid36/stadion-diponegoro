@@ -14,11 +14,19 @@
             <li class="nav-heading">Ruko</li>
             <!-- Data Ruko -->
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('ruko/*') ? '' : 'collapsed' }}" href="{{ route('ruko.index') }}">
+                <a class="nav-link {{ Request::is('ruko*') ? '' : 'collapsed' }}" href="{{ route('ruko.index') }}">
                     <i class="bi bi-shop-window"></i>
                     <span>Data Ruko</span>
                 </a>
             </li><!-- End Data Ruko -->
+            <!-- Data Penyewa -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('penyewa*') ? '' : 'collapsed' }}"
+                    href="{{ route('penyewa.index') }}">
+                    <i class="bi bi-person-bounding-box"></i>
+                    <span>Data Penyewa</span>
+                </a>
+            </li><!-- End Data Penyewa -->
         @elseif (Auth::user()->role == 'M')
         @else
             <li class="nav-heading">Stadion</li>

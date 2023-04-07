@@ -24,7 +24,7 @@
                         <h5 class="card-title">Data Ruko</h5>
                         <div>
                             <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
-                                <i class="bi bi-person-plus text-white"></i>&nbsp; Tambah Ruko
+                                <i class="bi bi-plus-circle text-white"></i>&nbsp; Tambah Ruko
                             </button>
                             {{-- <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#importModal">
                                 <i class="bi bi-file-earmark-excel"></i>&nbsp; Export Excel
