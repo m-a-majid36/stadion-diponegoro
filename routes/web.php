@@ -41,7 +41,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'role:A'], function() {
         #Ruko
         Route::resource('ruko', RukoController::class)->except('show', 'create', 'edit');
-        Route::resource('penyewa', PenyewaController::class);
+        Route::resource('penyewa', PenyewaController::class)->except('show');
+        Route::prefix('penyewa')->group(function() {
+            Route::post('/getregencies', [PenyewaController::class, 'get_regencies'])->name('penyewa.regencies');
+            Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
+            Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
+        });
     });
 });
 

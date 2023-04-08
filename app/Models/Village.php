@@ -45,4 +45,9 @@ class Village extends Model
     {
         return $this->belongsTo(District::class);
     }
+
+    public function penyewas()
+    {
+        return $this->hasMany(Penyewa::class);
+    }
 }

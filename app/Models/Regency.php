@@ -54,4 +54,9 @@ class Regency extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function penyewas()
+    {
+        return $this->hasMany(Penyewa::class);
+    }
 }

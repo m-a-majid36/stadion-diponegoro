@@ -62,9 +62,7 @@ class RukoController extends Controller
      */
     public function edit(string $id)
     {
-        // $ruko = Ruko::whereId(decrypt($id))->first();
-
-        // return view('menu.ruko.edit', compact('ruko'));
+        //
     }
 
     /**
