@@ -56,7 +56,7 @@
                                     <th scope="col" class="text-center">Nama Penyewa</th>
                                     <th scope="col" class="text-center">Keterangan</th>
                                     <th scope="col" width="100" class="text-center">Status</th>
-                                    <th scope="col" width="150" class="text-center">Aksi</th>
+                                    <th scope="col" width="180" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,14 +86,27 @@
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
+                                            @if ($data->id_penyewa)
+                                                <button class="btn btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#minModal{{ $data->id }}">
+                                                    <i class="bi bi-x-square text-white"></i>
+                                                </button>
+                                            @else
+                                                <button class="btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#tambahModal{{ $data->id }}">
+                                                    <i class="bi bi-plus-square text-white"></i>
+                                                </button>
+                                            @endif
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $data->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
-                                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal{{ $data->id }}">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            @if ($data->id_penyewa)
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $data->id }}">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     @include('menu.ruko.modal')

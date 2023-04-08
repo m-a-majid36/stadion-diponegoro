@@ -27,6 +27,14 @@
                     <span>Data Penyewa</span>
                 </a>
             </li><!-- End Data Penyewa -->
+            <!-- Data Sewa Ruko -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('sewaruko*') ? '' : 'collapsed' }}"
+                    href="{{ route('sewaruko.index') }}">
+                    <i class="ri ri-key-2-line"></i>
+                    <span>Sewa - Ruko</span>
+                </a>
+            </li><!-- End Data Sewa Ruko -->
         @elseif (Auth::user()->role == 'M')
         @else
             <li class="nav-heading">Stadion</li>

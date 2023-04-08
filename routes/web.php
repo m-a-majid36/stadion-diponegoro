@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
+use App\Http\Controllers\SewarukoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
             Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
         });
+        Route::resource('sewaruko', SewarukoController::class);
     });
 });
 
