@@ -69,15 +69,17 @@
                                         <td style="vertical-align: middle" class="text-end">@rupiah($data->tarif)
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if ($data->id_penyewa)
-                                                Nama Penyewa
-                                            @else
+                                            @if ($data->id_penyewa == 0)
                                                 -
+                                            @else
+                                                {{ $data->penyewa->nama }}
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle">{{ $data->keterangan }}</td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if ($data->status == 'kosong')
+                                            @if ($data->status == 'baru')
+                                                <span class="badge bg-info">Baru</span>
+                                            @elseif ($data->status == 'kosong')
                                                 <span class="badge bg-secondary">Kosong</span>
                                             @elseif ($data->status == 'lunas')
                                                 <span class="badge bg-success">Lunas</span>
@@ -86,22 +88,22 @@
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if ($data->id_penyewa)
-                                                <button class="btn btn-secondary" data-bs-toggle="modal"
-                                                    data-bs-target="#minModal{{ $data->id }}">
-                                                    <i class="bi bi-x-square text-white"></i>
+                                            @if ($data->id_penyewa == 0)
+                                                <button class="btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#sewaModal{{ $data->id }}">
+                                                    <i class="bi bi-plus-square text-white"></i>
                                                 </button>
                                             @else
-                                                <button class="btn btn-success" data-bs-toggle="modal"
-                                                    data-bs-target="#tambahModal{{ $data->id }}">
-                                                    <i class="bi bi-plus-square text-white"></i>
+                                                <button class="btn btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#lepasModal{{ $data->id }}">
+                                                    <i class="bi bi-x-square text-white"></i>
                                                 </button>
                                             @endif
                                             <button class="btn btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#editModal{{ $data->id }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
-                                            @if ($data->id_penyewa)
+                                            @if ($data->id_penyewa == 0)
                                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#deleteModal{{ $data->id }}">
                                                     <i class="bi bi-trash"></i>

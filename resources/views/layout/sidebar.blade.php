@@ -27,14 +27,28 @@
                     <span>Data Penyewa</span>
                 </a>
             </li><!-- End Data Penyewa -->
-            <!-- Data Sewa Ruko -->
+            <!-- Data Pembayaran -->
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('sewaruko*') ? '' : 'collapsed' }}"
-                    href="{{ route('sewaruko.index') }}">
-                    <i class="ri ri-key-2-line"></i>
-                    <span>Sewa - Ruko</span>
+                <a class="nav-link {{ Request::is('pembayaran*') ? '' : 'collapsed' }}"
+                    href="{{ route('pembayaran.index') }}">
+                    <i class="bi bi-cash-coin"></i>
+                    <span>Pembayaran</span>
                 </a>
-            </li><!-- End Data Sewa Ruko -->
+            </li><!-- End Data Pembayaran -->
+            <!-- Data Tagihan -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('tagihan*') ? '' : 'collapsed' }}" href="#">
+                    <i class="ri ri-alert-line"></i>
+                    <span>Tagihan</span>
+                </a>
+            </li><!-- End Data Tagihan -->
+            <!-- Data Pembukuan -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}" href="#">
+                    <i class="bi bi-journal-bookmark"></i>
+                    <span>Pembukuan</span>
+                </a>
+            </li><!-- End Data Pembukuan -->
         @elseif (Auth::user()->role == 'M')
         @else
             <li class="nav-heading">Stadion</li>

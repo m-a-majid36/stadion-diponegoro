@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
-use App\Http\Controllers\SewarukoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -42,13 +42,16 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'role:A'], function() {
         #Ruko
         Route::resource('ruko', RukoController::class)->except('show', 'create', 'edit');
+        Route::put('/ruko/sewa/{ruko}', [RukoController::class, 'sewa'])->name('ruko.sewa');
+        Route::put('/ruko/lepas/{ruko}', [RukoController::class, 'lepas'])->name('ruko.lepas');
         Route::resource('penyewa', PenyewaController::class)->except('show');
         Route::prefix('penyewa')->group(function() {
             Route::post('/getregencies', [PenyewaController::class, 'get_regencies'])->name('penyewa.regencies');
             Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
             Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
         });
-        Route::resource('sewaruko', SewarukoController::class);
+        Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'update');
+        Route::get('/pembayaran/ruko/{id_ruko}', [PembayaranController::class, 'getdata'])->name('pembayaran.getdata');
     });
 });
 

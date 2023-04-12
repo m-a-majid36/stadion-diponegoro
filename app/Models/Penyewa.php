@@ -11,6 +11,11 @@ class Penyewa extends Model
 
     protected $guarded = ['id'];
 
+    public function rukos()
+    {
+        return $this->hasMany(Ruko::class);
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class);

@@ -12,8 +12,8 @@ class Ruko extends Model
 
     protected $guarded = ['id'];
 
-    public function penyewas()
+    public function penyewa()
     {
-        return $this->hasMany(Penyewa::class, 'id_ruko');
+        return $this->belongsTo(Penyewa::class, 'id_penyewa');
     }
 }

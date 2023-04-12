@@ -21,7 +21,7 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="name" class="form-label">Tarif/Harga Ruko <span
+                        <label for="name" class="form-label">Tarif/Harga Ruko (hanya angka) <span
                                 class="text-danger">*</span></label>
                         <input type="text" id="tarif" name="tarif" required value="{{ old('tarif') }}"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '');"
@@ -33,7 +33,7 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="keterangan" class="form-label">Keterangan <span class="text-danger">*</span></label>
+                        <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea id="keterangan" name="keterangan" class="form-control @error('keterangan') is-invalid @enderror">{{ old('keterangan') }}</textarea>
                         @error('keterangan')
                             <div class="invalid-feedback">

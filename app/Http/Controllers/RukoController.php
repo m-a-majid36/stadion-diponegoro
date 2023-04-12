@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penyewa;
 use App\Models\Ruko;
+use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 use Whoops\Run;
 
@@ -14,8 +16,9 @@ class RukoController extends Controller
     public function index()
     {
         $ruko = Ruko::orderBy('kode', 'asc')->get();
+        $penyewa = Penyewa::all();
 
-        return view('menu.ruko.index', compact('ruko'));
+        return view('menu.ruko.index', compact('ruko', 'penyewa'));
     }
 
     /**
@@ -100,5 +103,19 @@ class RukoController extends Controller
         } else {
             return redirect()->route('ruko.index')->with('error', 'Ruko gagal dihapus!');
         }
+    }
+
+    public function sewa(Request $request, string $id)
+    {
+        Ruko::whereId($id)->update(['id_penyewa' => $request['id_penyewa'], ['status' => 'baru']]);
+        
+        return redirect()->route('ruko.index')->with('success', 'Ruko berhasil disewakan!');
+    }
+
+    public function lepas($id)
+    {
+        Ruko::whereId($id)->update(['id_penyewa' => 0]);
+
+        return redirect()->route('ruko.index')->with('success', 'Ruko berhasil dilepas sewa!');
     }
 }
