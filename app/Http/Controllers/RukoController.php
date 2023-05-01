@@ -107,14 +107,40 @@ class RukoController extends Controller
 
     public function sewa(Request $request, string $id)
     {
-        Ruko::whereId($id)->update(['id_penyewa' => $request['id_penyewa'], ['status' => 'baru']]);
+        if ($request['id_penyewa'] == 0) {
+            return redirect()->route('ruko.index')->with('error', 'Pilih nama penyewa!');
+        }
+
+        Ruko::whereId($id)->update(['id_penyewa' => $request['id_penyewa'], 'status' => 'nunggak', 'deadline' => date('Y-m-d H:i:s')]);
         
+        $penyewa = Penyewa::findOrFail($request['id_penyewa']);
+        if ($penyewa->status == 'nonaktif') {
+            $penyewa->update([
+                'status' => 'nunggak',
+                'mulai' => date('Y-m-d H:i:s')
+            ]);
+        } else {
+            $penyewa->update([
+                'status' => 'nunggak'
+            ]);
+        }
+
         return redirect()->route('ruko.index')->with('success', 'Ruko berhasil disewakan!');
     }
 
     public function lepas($id)
     {
-        Ruko::whereId($id)->update(['id_penyewa' => 0]);
+        $ruko = Ruko::whereId($id)->first();
+        $id_penyewa = $ruko->id_penyewa;
+
+        Ruko::whereId($id)->update(['id_penyewa' => 0, 'status' => 'kosong', 'deadline' => null]);
+        
+        if ($id_penyewa != 0) {
+            $cek_penyewa = Ruko::where('id_penyewa', '=', $id_penyewa)->first();
+            if ($cek_penyewa == null) {
+                Penyewa::whereId($id_penyewa)->update(['status' => 'nonaktif', 'selesai' => date('Y-m-d H:i:s')]);
+            }
+        }
 
         return redirect()->route('ruko.index')->with('success', 'Ruko berhasil dilepas sewa!');
     }

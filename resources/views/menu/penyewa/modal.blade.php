@@ -66,19 +66,45 @@
                                 <strong class="text-primary">: </strong>{{ ucfirst(strtolower($data->village->name)) }}
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 label">Mulai Sewa</div>
+                            <div class="col-lg-8 col-md-8">
+                                <strong class="text-primary">: </strong>{{ date('d-m-Y', strtotime($data->mulai)) }}
+                            </div>
+                        </div>
+                        @if ($data->status == 'nonaktif')
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 label">Selesai Sewa</div>
+                                <div class="col-lg-8 col-md-8">
+                                    <strong class="text-primary">:
+                                    </strong>{{ date('d-m-Y', strtotime($data->selesai)) }}
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
                             <div class="col-lg-4 col-md-4 label">Status</div>
                             <div class="col-lg-8 col-md-8">
                                 <strong class="text-primary">: </strong>
-                                @if ($data->status == 'baru')
-                                    <span class="badge bg-primary">Baru (DP)</span>
-                                @elseif ($data->status == 'lunas')
-                                    <span class="badge bg-success">Lunas</span>
-                                @elseif ($data->status == 'nunggak')
-                                    <span class="badge bg-danger">Menunggak</span>
-                                @elseif ($data->status == 'nonaktif')
+                                @if ($data->status == 'nonaktif')
                                     <span class="badge bg-secondary">Tidak Aktif</span>
+                                @elseif ($data->status == 'baru')
+                                    @if (date('Y-m-d H:i:s') < $data->selesai)
+                                        <span class="badge bg-info">Tanda Jadi</span>
+                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                        <span class="badge bg-danger">Belum Bayar</span>
+                                    @endif
+                                @elseif ($data->status == 'cicil')
+                                    @if (date('Y-m-d H:i:s') < $data->selesai)
+                                        <span class="badge bg-warning">Sebagian</span>
+                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                        <span class="badge bg-danger">Belum Bayar Sebagian</span>
+                                    @endif
+                                @else
+                                    @if (date('Y-m-d H:i:s') < $data->selesai)
+                                        <span class="badge bg-success">Lunas</span>
+                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                        <span class="badge bg-danger">Belum Bayar</span>
+                                    @endif
                                 @endif
                             </div>
                         </div>

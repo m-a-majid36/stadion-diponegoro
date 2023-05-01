@@ -62,14 +62,26 @@
                                         <td style="vertical-align: middle" class="text-center">{{ $data->toko }}</td>
                                         <td style="vertical-align: middle">{{ $data->keterangan }}</td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if ($data->status == 'baru')
-                                                <span class="badge bg-primary">Baru (DP)</span>
-                                            @elseif ($data->status == 'lunas')
-                                                <span class="badge bg-success">Lunas</span>
-                                            @elseif ($data->status == 'nunggak')
-                                                <span class="badge bg-danger">Menunggak</span>
-                                            @elseif ($data->status == 'nonaktif')
+                                            @if ($data->status == 'nonaktif')
                                                 <span class="badge bg-secondary">Tidak Aktif</span>
+                                            @elseif ($data->status == 'baru')
+                                                @if (date('Y-m-d H:i:s') < $data->selesai)
+                                                    <span class="badge bg-info">Tanda Jadi</span>
+                                                @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                                    <span class="badge bg-danger">Belum Bayar</span>
+                                                @endif
+                                            @elseif ($data->status == 'cicil')
+                                                @if (date('Y-m-d H:i:s') < $data->selesai)
+                                                    <span class="badge bg-warning">Sebagian</span>
+                                                @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                                    <span class="badge bg-danger">Belum Bayar Sebagian</span>
+                                                @endif
+                                            @else
+                                                @if (date('Y-m-d H:i:s') < $data->selesai)
+                                                    <span class="badge bg-success">Lunas</span>
+                                                @elseif (date('Y-m-d H:i:s') > $data->selesai)
+                                                    <span class="badge bg-danger">Belum Bayar</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">

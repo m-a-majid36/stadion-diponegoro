@@ -35,13 +35,6 @@
                     <span>Pembayaran</span>
                 </a>
             </li><!-- End Data Pembayaran -->
-            <!-- Data Tagihan -->
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('tagihan*') ? '' : 'collapsed' }}" href="#">
-                    <i class="ri ri-alert-line"></i>
-                    <span>Tagihan</span>
-                </a>
-            </li><!-- End Data Tagihan -->
             <!-- Data Pembukuan -->
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}" href="#">

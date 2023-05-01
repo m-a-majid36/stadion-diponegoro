@@ -51,7 +51,6 @@ class PenyewaController extends Controller
             'keterangan'    => '',
         ]);
         $validatedData['mulai'] = date('Y-m-d H:i:s');
-        $validatedData['selesai'] = date('Y-m-d H:i:s');
         $validatedData['status'] = 'nonaktif';
 
         $validatedData['ktp'] = $request->file('ktp')->store('ktp');

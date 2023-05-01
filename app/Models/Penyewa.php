@@ -16,6 +16,11 @@ class Penyewa extends Model
         return $this->hasMany(Ruko::class);
     }
 
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class);
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class);

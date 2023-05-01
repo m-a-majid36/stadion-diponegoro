@@ -44,7 +44,7 @@
                                     <th scope="col" width="65">No.</th>
                                     <th scope="col" width="150" class="text-center">Tanggal</th>
                                     <th scope="col" width="150" class="text-center">Kode Ruko</th>
-                                    <th scope="col" width="160" class="text-center">Tarif</th>
+                                    <th scope="col" width="160" class="text-center">Nominal</th>
                                     <th scope="col" class="text-center">Nama Penyewa</th>
                                     <th scope="col" class="text-center">Keterangan</th>
                                     <th scope="col" width="100" class="text-center">Status</th>
@@ -110,8 +110,20 @@
                     url: "/pembayaran/ruko/" + id_ruko,
                     type: "GET",
                     success: function(data) {
-                        var ruko = data.ruko;
-                        var html_nama = ``
+                        var penyewa = data.penyewa;
+                        var html_nama =
+                            `<input type="text" name="nama" readonly class="form-control" value="` +
+                            penyewa['nama'] + `">`;
+                        var html_toko =
+                            `<input type="text" name="toko" readonly class="form-control" value="` +
+                            penyewa['toko'] + `">`;
+                        var html_id_penyewa =
+                            `<input type="hidden" name="id_penyewa" readonly class="form-control" value="` +
+                            penyewa['id'] + `">`;
+
+                        $("#nama").html(html_nama);
+                        $("#id_penyewa").html(html_id_penyewa);
+                        $("#toko").html(html_toko);
                     }
                 })
             });

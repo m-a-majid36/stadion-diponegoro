@@ -15,6 +15,7 @@
                                 class="text-danger">*</span></label>
                         <select id="id_ruko" name="id_ruko"
                             class="form-select @error('id_ruko') is-invalid @enderror">
+                            <option selected disabled value="0">Pilih Ruko...</option>
                             @foreach ($ruko as $data)
                                 <option value="{{ $data->id }}" {{ old('id_ruko') == $data->id ? 'selected' : '' }}>
                                     {{ $data->kode }}
@@ -28,20 +29,21 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="id_penyewa" class="form-label">Nama Penyewa <span
-                                class="text-danger">*</span></label>
-                        <div id="id_penyewa">
+                        <label for="nama" class="form-label">Nama Penyewa <span class="text-danger">*</span></label>
+                        <div id="nama">
                             <input type="text" readonly class="form-control">
+                        </div>
+                        <div id="id_penyewa">
                         </div>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="toko" class="form-label">Nama Toko <span class="text-danger">*</span></label>
                         <div id="toko">
-                            <input type="text" class="form-control" readonly>
+                            <input type="text" readonly class="form-control">
                         </div>
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="nominal" class="form-label">Nominal Pembayaran (Masukkan Angka)<span
+                        <label for="nominal" class="form-label">Nominal Pembayaran (Masukkan Hanya Angka)<span
                                 class="text-danger">*</span></label>
                         <input type="text" id="nominal" name="nominal" required
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');"

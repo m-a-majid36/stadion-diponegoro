@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
             Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
         });
-        Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'update');
+        Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'update', 'destroy');
         Route::get('/pembayaran/ruko/{id_ruko}', [PembayaranController::class, 'getdata'])->name('pembayaran.getdata');
     });
 });

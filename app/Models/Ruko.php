@@ -16,4 +16,9 @@ class Ruko extends Model
     {
         return $this->belongsTo(Penyewa::class, 'id_penyewa');
     }
+
+    public function pembayarans()
+    {
+        return $this->hasMany(Pembayaran::class);
+    }
 }
