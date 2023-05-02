@@ -177,7 +177,7 @@
                             <!-- Kolom Foto KTP -->
                             <div class="col-lg-12">
                                 <div class="col-12 mt-3">
-                                    <label for="ktp" class="form-label">Foto KTP (Maksimal 2 MB) <span
+                                    <label for="ktp" class="form-label">Foto KTP <span
                                             class="text-danger">*</span></label>
                                     <input type="hidden" name="oldKTP" value="{{ $penyewa->ktp }}">
                                     @if ($penyewa->ktp)

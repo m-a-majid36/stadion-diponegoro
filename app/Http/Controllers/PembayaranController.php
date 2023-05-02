@@ -8,6 +8,7 @@ use App\Models\Penyewa;
 use App\Models\Ruko;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Whoops\Run;
 
 class PembayaranController extends Controller
@@ -38,12 +39,19 @@ class PembayaranController extends Controller
             'nominal'       => 'required|numeric',
             'deadline'      => 'required|date',
             'status'        => 'required',
+            'bukti_bayar'   => 'file',
             'keterangan'    => ''
         ]);
 
         $bulanini = Pembayaran::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count() + 2;
 
         $validatedData['kode'] = 'Ruko-' . date('m') . '-' . $bulanini;
+
+        if ($request->file('bukti_bayar')) {
+            $validatedData['file'] = $request->file('bukti_bayar')->store('bukti_bayar');
+        } else {
+            $validatedData['file'] = null;
+        }
 
         $hasil = Pembayaran::create($validatedData);
         $ruko = Ruko::findOrFail($validatedData['id_ruko']);

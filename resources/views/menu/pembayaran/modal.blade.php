@@ -58,9 +58,11 @@
                                 </strong>{{ $data->keterangan }}</div>
                         </div>
 
-                        {{-- <div class="mt-3 text-center">
-                            <img src="{{ Storage::url($data->ktp) }}" alt="KTP" width="350">
-                        </div> --}}
+                        @if ($data->file)
+                            <div class="mt-3 text-center">
+                                <img src="{{ Storage::url($data->file) }}" width="350">
+                            </div>
+                        @endif
 
                     </div>
                 </div>

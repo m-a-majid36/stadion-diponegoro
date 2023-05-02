@@ -6,7 +6,7 @@
                 <h5 class="modal-title text-white"><strong>Tambah Pembayaran</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('pembayaran.store') }}" method="POST">
+            <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <!-- Kolom From User -->
@@ -89,6 +89,16 @@
                         <input type="date" id="deadline" name="deadline" required value="{{ old('deadline') }}"
                             class="form-control @error('deadline') is-invalid @enderror">
                         @error('deadline')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="bukti_bayar" class="form-label">File tambahan</label>
+                        <input type="file" name="bukti_bayar" id="bukti_bayar"
+                            class="form-control @error('bukti_bayar') is-invalid @enderror">
+                        @error('bukti_bayar')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>

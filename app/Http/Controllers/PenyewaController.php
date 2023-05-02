@@ -47,7 +47,7 @@ class PenyewaController extends Controller
             'regency_id'    => 'required',
             'district_id'   => 'required',
             'village_id'    => 'required',
-            'ktp'           => 'required|image|file|max:2048',
+            'ktp'           => 'required|image|file',
             'keterangan'    => '',
         ]);
         $validatedData['mulai'] = date('Y-m-d H:i:s');

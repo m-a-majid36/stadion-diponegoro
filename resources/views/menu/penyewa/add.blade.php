@@ -157,7 +157,7 @@
                             <!-- Kolom Foto KTP -->
                             <div class="col-lg-12">
                                 <div class="col-12 mt-3">
-                                    <label for="ktp" class="form-label">Foto KTP (Maksimal 2 MB) <span
+                                    <label for="ktp" class="form-label">Foto KTP <span
                                             class="text-danger">*</span></label>
                                     <img class="ktp-preview img-fluid mb-3 text-center">
                                     <input type="file" name="ktp" id="ktp"
