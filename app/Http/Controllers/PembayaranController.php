@@ -6,6 +6,7 @@ use App\Models\Pembayaran;
 use App\Models\Pembukuan;
 use App\Models\Penyewa;
 use App\Models\Ruko;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Whoops\Run;
 
@@ -96,42 +97,42 @@ class PembayaranController extends Controller
     }
 
     public function print(string $id)
-    {
-        if (date('m') == "01") {
+    {        
+        $pembayaran = Pembayaran::findOrFail(decrypt($id));
+
+        if (date('m', strtotime($pembayaran->created_at)) == "01") {
             $bulan = 'Januari';
-        } elseif (date('m') == "02") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "02") {
             $bulan = 'Februari';
-        } elseif (date('m') == "03") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "03") {
             $bulan = 'Maret';
-        } elseif (date('m') == "04") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "04") {
             $bulan = 'April';
-        } elseif (date('m') == "05") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "05") {
             $bulan = 'Mei';
-        } elseif (date('m') == "06") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "06") {
             $bulan = 'Juni';
-        } elseif (date('m') == "07") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "07") {
             $bulan = 'Juli';
-        } elseif (date('m') == "08") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "08") {
             $bulan = 'Agustus';
-        } elseif (date('m') == "09") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "09") {
             $bulan = 'September';
-        } elseif (date('m') == "10") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "10") {
             $bulan = 'Oktober';
-        } elseif (date('m') == "11") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "11") {
             $bulan = 'November';
-        } elseif (date('m') == "12") {
+        } elseif (date('m', strtotime($pembayaran->created_at)) == "12") {
             $bulan = 'Desember';
         }
-        
-        $pembayaran = Pembayaran::findOrFail(decrypt($id));
-        
-        $terbilang = ucwords(''.$this->Terbilang($pembayaran->nominal).'')." Rupiah"; 
 
-        return view('menu.pembayaran.print', [
-            'pembayaran'    => $pembayaran,
-            'tanggal'       => 'Semarang, ' . date('d') . ' ' . $bulan . ' ' . date('Y'),
-            'terbilang'     => $terbilang,
-        ]);
+        $terbilang = ucwords(''.$this->Terbilang($pembayaran->nominal).'')." Rupiah"; 
+        $tanggal = 'Semarang, ' . date('d', strtotime($pembayaran->created_at)) . ' ' . $bulan . ' ' . date('Y', strtotime($pembayaran->created_at));
+
+        $pdf = Pdf::loadView('menu.pembayaran.print', compact('pembayaran', 'tanggal', 'terbilang'))->setPaper('a4', 'potrait');
+
+        return $pdf->download("Kuitansi " . $pembayaran->kode . " " . date('d-m-Y', strtotime($pembayaran->created_at)) . ".pdf");
+        // return view('menu.pembayaran.print', compact('pembayaran', 'tanggal', 'terbilang'));
     }
 
     public function Terbilang($x)

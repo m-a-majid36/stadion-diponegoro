@@ -81,11 +81,12 @@
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
                                             <a href="{{ route('pembayaran.print', ['id' => encrypt($data->id)]) }}"
-                                                target="blank" class="btn btn-info text-white"><i class="bi bi-printer"></i>
+                                                target="blank" class="btn btn-primary text-white"><i
+                                                    class="bi bi-printer"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                    {{-- @include('menu.pembayaran.modal') --}}
+                                    @include('menu.pembayaran.modal')
                                 @endforeach
                             </tbody>
                         </table>

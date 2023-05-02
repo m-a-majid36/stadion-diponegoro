@@ -3,114 +3,64 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-info">
-                <h5 class="modal-title text-white"><strong>{{ $data->nama }}</strong></h5>
+                <h5 class="modal-title text-white"><strong>Data Pembayaran Ruko</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                     <div class="row">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 label ">Nama</div>
+                            <div class="col-lg-4 col-md-4 label ">Nama Penyewa</div>
                             <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ $data->nama }}
+                                <strong class="text-primary">: </strong>{{ $data->penyewa->nama }}
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 label">NIK</div>
+                            <div class="col-lg-4 col-md-4 label">Kode Ruko</div>
                             <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ $data->nik }}
+                                <strong class="text-primary">: </strong>{{ $data->ruko->kode }}
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 label">No. Telepon</div>
+                            <div class="col-lg-4 col-md-4 label">Nominal</div>
                             <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ $data->telepon }}
+                                <strong class="text-primary">: </strong>@rupiah($data->nominal)
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Nama Toko</div>
+                            <div class="col-lg-4 col-md-4 label">Tanggal</div>
                             <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ $data->toko }}
+                                <strong class="text-primary">:
+                                </strong>{{ date('d-m-Y', strtotime($data->created_at)) }}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Alamat</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ $data->alamat }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Provinsi</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ ucfirst(strtolower($data->province->name)) }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Kab./Kota</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ ucfirst(strtolower($data->regency->name)) }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Kecamatan</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ ucfirst(strtolower($data->district->name)) }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Kel./Desa</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ ucfirst(strtolower($data->village->name)) }}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 label">Mulai Sewa</div>
-                            <div class="col-lg-8 col-md-8">
-                                <strong class="text-primary">: </strong>{{ date('d-m-Y', strtotime($data->mulai)) }}
-                            </div>
-                        </div>
-                        @if ($data->status == 'nonaktif')
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4 label">Selesai Sewa</div>
-                                <div class="col-lg-8 col-md-8">
-                                    <strong class="text-primary">:
-                                    </strong>{{ date('d-m-Y', strtotime($data->selesai)) }}
-                                </div>
-                            </div>
-                        @endif
                         <div class="row">
                             <div class="col-lg-4 col-md-4 label">Status</div>
                             <div class="col-lg-8 col-md-8">
                                 <strong class="text-primary">: </strong>
-                                @if ($data->status == 'nonaktif')
-                                    <span class="badge bg-secondary">Tidak Aktif</span>
-                                @elseif ($data->status == 'baru')
-                                    @if (date('Y-m-d H:i:s') < $data->selesai)
-                                        <span class="badge bg-info">Tanda Jadi</span>
-                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
-                                        <span class="badge bg-danger">Belum Bayar</span>
-                                    @endif
+                                @if ($data->status == 'baru')
+                                    <span class="badge bg-primary">DP (Tanda Jadi)</span>
+                                @elseif ($data->status == 'lunas')
+                                    <span class="badge bg-success">Lunas</span>
                                 @elseif ($data->status == 'cicil')
-                                    @if (date('Y-m-d H:i:s') < $data->selesai)
-                                        <span class="badge bg-warning">Sebagian</span>
-                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
-                                        <span class="badge bg-danger">Belum Bayar Sebagian</span>
-                                    @endif
-                                @else
-                                    @if (date('Y-m-d H:i:s') < $data->selesai)
-                                        <span class="badge bg-success">Lunas</span>
-                                    @elseif (date('Y-m-d H:i:s') > $data->selesai)
-                                        <span class="badge bg-danger">Belum Bayar</span>
-                                    @endif
+                                    <span class="badge bg-info">Sebagian</span>
+                                @elseif ($data->status == 'telat')
+                                    <span class="badge bg-warning">Telat</span>
                                 @endif
                             </div>
                         </div>
-                        <div class="mt-3 text-center">
-                            <img src="{{ Storage::url($data->ktp) }}" alt="KTP" width="350">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 label">Keterangan</div>
+                            <div class="col-lg-8 col-md-8"><strong class="text-primary">:
+                                </strong>{{ $data->keterangan }}</div>
                         </div>
+
+                        {{-- <div class="mt-3 text-center">
+                            <img src="{{ Storage::url($data->ktp) }}" alt="KTP" width="350">
+                        </div> --}}
 
                     </div>
                 </div>

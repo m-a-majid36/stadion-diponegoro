@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Pembukuan;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class PembukuanController extends Controller
 {
@@ -25,7 +25,20 @@ class PembukuanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'tgl_transaksi' => 'required',
+            'jenis'         => 'required',
+            'nominal'       => 'required|numeric',
+            'deskripsi'     => 'required',
+            'keterangan'    => ''
+        ]);
+
+        $hasil = Pembukuan::create($validatedData);
+        if ($hasil) {
+            return redirect()->route('pembukuan.index')->with('success', 'Transaksi berhasil ditambahkan!');
+        } else {
+            return redirect()->route('pembukuan.index')->with('error', 'Transaksi gagal ditambahkan!');
+        }
     }
 
     /**
