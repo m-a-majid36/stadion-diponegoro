@@ -114,7 +114,7 @@
                                                 </button>
                                             @endif
                                             @if ($data->id_penyewa)
-                                                <button class="btn btn-secondary" data-bs-toggle="modal"
+                                                <button class="btn btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#lepasModal{{ $data->id }}">
                                                     <i class="bi bi-x-square text-white"></i>
                                                 </button>

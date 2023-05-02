@@ -37,7 +37,8 @@
             </li><!-- End Data Pembayaran -->
             <!-- Data Pembukuan -->
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}" href="#">
+                <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}"
+                    href="{{ route('pembukuan.index') }}">
                     <i class="bi bi-journal-bookmark"></i>
                     <span>Pembukuan</span>
                 </a>

@@ -4,7 +4,7 @@
 
     @yield('meta')
 
-    <title>Stadion Diponegoro</title>
+    <title>Stadion Diponegoro | @yield('title')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 

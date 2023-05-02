@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title', 'Pemabayaran')
+@section('title', 'Pembayaran')
 @section('content')
     <!-- Content -->
     <main id="main" class="main">
@@ -43,7 +43,7 @@
                                 <tr>
                                     <th scope="col" width="65">No.</th>
                                     <th scope="col" width="150" class="text-center">Tanggal</th>
-                                    <th scope="col" width="150" class="text-center">Kode Ruko</th>
+                                    <th scope="col" class="text-center">Ruko</th>
                                     <th scope="col" width="160" class="text-center">Nominal</th>
                                     <th scope="col" class="text-center">Nama Penyewa</th>
                                     <th scope="col" class="text-center">Keterangan</th>
@@ -80,11 +80,12 @@
                                                 data-bs-target="#showModal{{ $data->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
-                                            <a href="#" class="btn btn-info"><i class="bi bi-printer"></i>
+                                            <a href="{{ route('pembayaran.print', ['id' => encrypt($data->id)]) }}"
+                                                target="blank" class="btn btn-info text-white"><i class="bi bi-printer"></i>
                                             </a>
                                         </td>
                                     </tr>
-                                    @include('menu.pembayaran.modal')
+                                    {{-- @include('menu.pembayaran.modal') --}}
                                 @endforeach
                             </tbody>
                         </table>

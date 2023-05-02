@@ -3,8 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PembukuanController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
+use App\Models\Pembukuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +54,12 @@ Route::group(['middleware' => 'auth'], function() {
         });
         Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'update', 'destroy');
         Route::get('/pembayaran/ruko/{id_ruko}', [PembayaranController::class, 'getdata'])->name('pembayaran.getdata');
+        Route::get('/pembayaran/print/{id}', [PembayaranController::class, 'print'])->name('pembayaran.print');
+        Route::prefix('pembukuan')->name('pembukuan.')->group(function() {
+            Route::get('/', [PembukuanController::class, 'index'])->name('index');
+            Route::get('/show', [PembukuanController::class, 'show'])->name('show');
+            Route::post('/create', [PembukuanController::class, 'store'])->name('store');
+        });
     });
 });
 

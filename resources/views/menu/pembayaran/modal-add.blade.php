@@ -77,7 +77,7 @@
                                 Sebagian/Menyicil
                             </label>
                         </div>
-                        @error('email')
+                        @error('status')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
