@@ -90,8 +90,7 @@
                 <h3>Pada Bulan <strong>{{ $pbulanAwalNama }}</strong> Tahun <strong>{{ $ptahunAwal }}</strong></h3>
             @else
                 <h3>Pada Bulan <strong>{{ $pbulanAwalNama }}</strong> Tahun <strong>{{ $ptahunAwal }}</strong> sampai
-                    Bulan
-                    <strong>{{ $pbulanAkhirNama }}</strong> Tahun <strong>{{ $ptahunAkhir }}</strong>
+                    Bulan <strong>{{ $pbulanAkhirNama }}</strong> Tahun <strong>{{ $ptahunAkhir }}</strong>
                 </h3>
             @endif
         </div>

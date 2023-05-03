@@ -43,10 +43,8 @@
                                 </h5>
                             @else
                                 <h5 class="card-title text-center mt-0">Pada Bulan <strong>{{ $bulanAwalNama }}</strong>
-                                    Tahun
-                                    <strong>{{ $tahunAwal }}</strong> sampai Bulan
-                                    <strong>{{ $bulanAkhirNama }}</strong>
-                                    Tahun <strong>{{ $tahunAkhir }}</strong>
+                                    Tahun <strong>{{ $tahunAwal }}</strong> sampai Bulan
+                                    <strong>{{ $bulanAkhirNama }}</strong> Tahun <strong>{{ $tahunAkhir }}</strong>
                                 </h5>
                             @endif
 
