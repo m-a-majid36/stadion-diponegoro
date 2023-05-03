@@ -36,9 +36,12 @@ class RukoController extends Controller
     {
         $validatedData = $request->validate([
             'kode'          => 'required',
-            'tarif'         => 'required|numeric'
+            'tarif'         => 'required'
         ]);
 
+        $tarif = str_replace(array('R','p','.',' '), '', $validatedData['tarif']);
+
+        $validatedData['tarif'] = $tarif;
         $validatedData['status'] = 'kosong';
         $validatedData['id_penyewa'] = 0;
         $validatedData['keterangan'] = $request->keterangan;

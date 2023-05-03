@@ -57,7 +57,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/pembayaran/print/{id}', [PembayaranController::class, 'print'])->name('pembayaran.print');
         Route::prefix('pembukuan')->name('pembukuan.')->group(function() {
             Route::get('/', [PembukuanController::class, 'index'])->name('index');
+            Route::get('/all', [PembukuanController::class, 'all'])->name('all');
             Route::get('/show', [PembukuanController::class, 'show'])->name('show');
+            Route::get('/create', [PembukuanController::class, 'create'])->name('create');
             Route::post('/create', [PembukuanController::class, 'store'])->name('store');
         });
     });

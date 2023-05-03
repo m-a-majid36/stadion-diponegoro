@@ -36,12 +36,16 @@ class PembayaranController extends Controller
         $validatedData = $request->validate([
             'id_ruko'       => 'required',
             'id_penyewa'    => 'required',
-            'nominal'       => 'required|numeric',
+            'nominal'       => 'required',
             'deadline'      => 'required|date',
             'status'        => 'required',
             'bukti_bayar'   => 'file',
             'keterangan'    => ''
         ]);
+
+        $nominal = str_replace(array('R','p','.',' '), '', $validatedData['nominal']);
+
+        $validatedData['nominal'] = $nominal;
 
         $bulanini = Pembayaran::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count() + 2;
 
@@ -89,13 +93,24 @@ class PembayaranController extends Controller
             ]);
         }
 
-        Pembukuan::create([
-            'jenis'         => 'D',
-            'nominal'       => $validatedData['nominal'],
-            'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
-            'keterangan'    => $validatedData['keterangan'],
-            'tgl_transaksi' => date('Y-m-d H:i:s')
-        ]);
+        if ($request->file('bukti_bayar')) {
+            Pembukuan::create([
+                'jenis'         => 'D',
+                'nominal'       => $validatedData['nominal'],
+                'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
+                'keterangan'    => $validatedData['keterangan'],
+                'tgl_transaksi' => date('Y-m-d H:i:s'),
+                'gambar'        => $validatedData['file']
+            ]);
+        } else {
+            Pembukuan::create([
+                'jenis'         => 'D',
+                'nominal'       => $validatedData['nominal'],
+                'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
+                'keterangan'    => $validatedData['keterangan'],
+                'tgl_transaksi' => date('Y-m-d H:i:s')
+            ]);
+        }
 
         if ($hasil) {
             return redirect()->route('pembayaran.index')->with('success', 'Pembayaran berhasil ditambahkan!');

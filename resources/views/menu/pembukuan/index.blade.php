@@ -5,11 +5,11 @@
     <main id="main" class="main">
         <!-- Page Title -->
         <div class="pagetitle">
-            <h1>Pembukuan</h1>
+            <h1>Pembukuan Per Periode</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Pembukuan</li>
+                    <li class="breadcrumb-item active">Pembukuan Per Periode</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -18,11 +18,7 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Pembukuan</h5>
-                        <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addModal">
-                            <i class="bi bi-plus-circle text-white"></i>&nbsp; Tambah Data Pembukuan
-                        </button>
-                        @include('menu.pembukuan.modal-add')
+                        <h5 class="card-title">Pembukuan Per Periode</h5>
                         @if (session()->has('success'))
                             <div class="alert alert-success alert-dismissible fade show">
                                 <i class="bi bi-check-circle me-1"></i>

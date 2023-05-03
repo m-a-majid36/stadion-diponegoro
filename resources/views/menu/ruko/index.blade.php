@@ -143,4 +143,30 @@
     <!-- / Content -->
 @endsection
 @section('script')
+    <script type="text/javascript">
+        var tarif = document.getElementById('tarif');
+        tarif.addEventListener('keyup', function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatTarif() untuk mengubah angka yang di ketik menjadi format angka
+            tarif.value = formatTarif(this.value, 'Rp. ');
+        });
+
+        /* Fungsi formatTarif */
+        function formatTarif(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                tarif = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                tarif += separator + ribuan.join('.');
+            }
+
+            tarif = split[1] != undefined ? tarif + ',' + split[1] : tarif;
+            return prefix == undefined ? tarif : (tarif ? 'Rp. ' + tarif : '');
+        }
+    </script>
 @endsection

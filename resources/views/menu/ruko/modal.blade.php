@@ -29,12 +29,13 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="name" class="form-label">Tarif/Harga Ruko <span
+                        <label for="tarif" class="form-label">Tarif/Harga Ruko <span
                                 class="text-danger">*</span></label>
-                        <input type="text" id="tarif" name="tarif" required
-                            value="{{ old('tarif') ? old('tarif') : $data->tarif }}"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '');"
-                            class="form-control @error('tarif') is-invalid @enderror">
+                        <input type="text" id="tarif" name="tarif" required value="@rupiah($data->tarif)"
+                            class="form-control @error('tarif')
+is-invalid
+@enderror"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '');">
                         @error('tarif')
                             <div class="invalid-feedback">
                                 {{ $message }}

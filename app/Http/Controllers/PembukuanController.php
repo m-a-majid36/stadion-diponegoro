@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pembukuan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PembukuanController extends Controller
 {
@@ -20,6 +21,31 @@ class PembukuanController extends Controller
         return view('menu.pembukuan.index', compact('years'));
     }
 
+    public function all()
+    {
+        $pembukuans = Pembukuan::latest();
+
+        $debit = clone $pembukuans;
+        $kredit = clone $pembukuans;
+
+        $pembukuans = $pembukuans->get();
+
+        $debit = $debit->where('jenis', 'D')->get();
+        $kredit = $kredit->where('jenis', 'K')->get();        
+
+        return view('menu.pembukuan.all', [
+            'pembukuans'    => $pembukuans,
+            'saldo'         => $debit->sum('nominal') - $kredit->sum('nominal'),
+            'totalDebit'    => $debit->sum('nominal'),
+            'totalKredit'   => $kredit->sum('nominal'),
+        ]);
+    }
+
+    public function create()
+    {
+        return view('menu.pembukuan.add');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -28,10 +54,21 @@ class PembukuanController extends Controller
         $validatedData = $request->validate([
             'tgl_transaksi' => 'required',
             'jenis'         => 'required',
-            'nominal'       => 'required|numeric',
+            'nominal'       => 'required',
             'deskripsi'     => 'required',
+            'gambar'        => 'file',
             'keterangan'    => ''
         ]);
+
+        $nominal = str_replace(array('R','p','.',' '), '', $validatedData['nominal']);
+
+        $validatedData['nominal'] = $nominal;
+
+        if ($request->file('gambar')) {
+            $validatedData['gambar'] = $request->file('gambar')->store('gambar');
+        } else {
+            $validatedData['gambar'] = null;
+        }
 
         $hasil = Pembukuan::create($validatedData);
         if ($hasil) {
@@ -131,6 +168,25 @@ class PembukuanController extends Controller
             $bulanAkhirNama = 'Desember';
         }
 
+        if ($request->print) {
+            $ppembukuans    = $pembukuans;
+            $psaldo         = $debit->sum('nominal') - $kredit->sum('nominal');
+            $ptotalDebit    = $debit->sum('nominal');
+            $ptotalKredit   = $kredit->sum('nominal');
+            $pbulanAwal     = $request->bulanAwal;
+            $pbulanAwalNama = $bulanAwalNama;
+            $pbulanAkhir    = $request->bulanAkhir;
+            $pbulanAkhirNama= $bulanAkhirNama;
+            $ptahunAwal     = $request->tahunAwal;
+            $ptahunAkhir    = $request->tahunAkhir;
+
+            $pdf = Pdf::loadView('menu.pembukuan.print',
+                compact('ppembukuans', 'psaldo', 'ptotalDebit', 'ptotalKredit', 'pbulanAwal', 'pbulanAwalNama', 'pbulanAkhir', 'pbulanAkhirNama', 'ptahunAwal', 'ptahunAkhir'))
+                ->setPaper('a4', 'potrait');
+
+            return $pdf->download("Pembukuan Periode " . $pbulanAwalNama . " " . $ptahunAwal . " hingga " . $pbulanAkhirNama . " " . $ptahunAkhir . ".pdf");
+        }
+
         return view('menu.pembukuan.show', [
             'pembukuans'    => $pembukuans,
             'saldo'         => $debit->sum('nominal') - $kredit->sum('nominal'),
@@ -148,9 +204,9 @@ class PembukuanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function print(string $id)
     {
-        //
+        // $pembukuan = Pembukuan
     }
 
     /**

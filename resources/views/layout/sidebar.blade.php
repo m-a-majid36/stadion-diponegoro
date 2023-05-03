@@ -37,11 +37,33 @@
             </li><!-- End Data Pembayaran -->
             <!-- Data Pembukuan -->
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}"
-                    href="{{ route('pembukuan.index') }}">
-                    <i class="bi bi-journal-bookmark"></i>
-                    <span>Pembukuan</span>
+                <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}" data-bs-target="#components-nav"
+                    data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-bookmark"></i><span>Pembukuan</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="components-nav" class="nav-content collapse {{ Request::is('pembukuan*') ? 'show' : '' }}"
+                    data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('pembukuan.all') }}"
+                            class="{{ Request::is('pembukuan/all') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Pembukuan Keseluruhan</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('pembukuan.create') }}"
+                            class="{{ Request::is('pembukuan/create') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Tambah Transaksi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('pembukuan.index') }}"
+                            class="{{ Request::is('pembukuan') || Request::is('pembukuan/show*') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Pembukuan Per Periode</span>
+                        </a>
+                    </li>
+                </ul>
             </li><!-- End Data Pembukuan -->
         @elseif (Auth::user()->role == 'M')
         @else
