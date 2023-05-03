@@ -37,10 +37,19 @@
                                 </form>
                             </div>
                             <h3 class="text-center mb-0" style="color: black">PEMBUKUAN</h3>
-                            <h5 class="card-title text-center mt-0">Pada Bulan <strong>{{ $bulanAwalNama }}</strong> Tahun
-                                <strong>{{ $tahunAwal }}</strong> sampai Bulan <strong>{{ $bulanAkhirNama }}</strong>
-                                Tahun <strong>{{ $tahunAkhir }}</strong>
-                            </h5>
+                            @if ($bulanAwal == $bulanAkhir && $tahunAwal == $tahunAkhir)
+                                <h5 class="card-title text-center mt-0"> Pada Bulan <strong>{{ $bulanAwalNama }}</strong>
+                                    Tahun <strong>{{ $tahunAwal }}</strong>
+                                </h5>
+                            @else
+                                <h5 class="card-title text-center mt-0">Pada Bulan <strong>{{ $bulanAwalNama }}</strong>
+                                    Tahun
+                                    <strong>{{ $tahunAwal }}</strong> sampai Bulan
+                                    <strong>{{ $bulanAkhirNama }}</strong>
+                                    Tahun <strong>{{ $tahunAkhir }}</strong>
+                                </h5>
+                            @endif
+
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>

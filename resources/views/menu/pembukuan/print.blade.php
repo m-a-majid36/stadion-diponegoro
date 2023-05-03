@@ -86,10 +86,14 @@
     <section class="font-cambria text-center">
         <div class="yth">
             <h2>PEMBUKUAN<br>Stadion Diponegoro - Semarang</h2>
-            <h3>Pada Bulan <strong>{{ $pbulanAwalNama }}</strong> Tahun <strong>{{ $ptahunAwal }}</strong> sampai
-                Bulan
-                <strong>{{ $pbulanAkhirNama }}</strong> Tahun <strong>{{ $ptahunAkhir }}</strong>
-            </h3>
+            @if ($pbulanAwal == $pbulanAkhir && $ptahunAwal == $ptahunAkhir)
+                <h3>Pada Bulan <strong>{{ $pbulanAwalNama }}</strong> Tahun <strong>{{ $ptahunAwal }}</strong></h3>
+            @else
+                <h3>Pada Bulan <strong>{{ $pbulanAwalNama }}</strong> Tahun <strong>{{ $ptahunAwal }}</strong> sampai
+                    Bulan
+                    <strong>{{ $pbulanAkhirNama }}</strong> Tahun <strong>{{ $ptahunAkhir }}</strong>
+                </h3>
+            @endif
         </div>
     </section>
     <section>
