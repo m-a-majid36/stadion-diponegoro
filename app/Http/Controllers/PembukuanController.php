@@ -72,9 +72,9 @@ class PembukuanController extends Controller
 
         $hasil = Pembukuan::create($validatedData);
         if ($hasil) {
-            return redirect()->route('pembukuan.index')->with('success', 'Transaksi berhasil ditambahkan!');
+            return redirect()->route('pembukuan.all')->with('success', 'Transaksi berhasil ditambahkan!');
         } else {
-            return redirect()->route('pembukuan.index')->with('error', 'Transaksi gagal ditambahkan!');
+            return redirect()->route('pembukuan.all')->with('error', 'Transaksi gagal ditambahkan!');
         }
     }
 
