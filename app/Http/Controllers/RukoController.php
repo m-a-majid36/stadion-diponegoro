@@ -35,7 +35,7 @@ class RukoController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'kode'          => 'required',
+            'kode'          => 'required|unique:rukos',
             'tarif'         => 'required'
         ]);
 
@@ -51,7 +51,7 @@ class RukoController extends Controller
         if ($hasil) {
             return redirect()->route('ruko.index')->with('success', 'Ruko berhasil ditambahkan!');
         } else {
-            return redirect()->route('ruko.create')->with('error', 'Ruko gagal ditambahkan!');
+            return redirect()->route('ruko.index')->with('error', 'Ruko gagal ditambahkan!');
         }
     }
 
