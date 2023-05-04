@@ -31,10 +31,8 @@
                     <div class="col-12 mb-3">
                         <label for="tarif" class="form-label">Tarif/Harga Ruko <span
                                 class="text-danger">*</span></label>
-                        <input type="text" id="tarif" name="tarif" required value="@rupiah($data->tarif)"
-                            class="form-control @error('tarif')
-is-invalid
-@enderror"
+                        <input type="text" id="tarif" name="tarif"
+                            class="form-control @error('tarif') is-invalid @enderror" required value="@rupiah($data->tarif)"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^0+/, '');">
                         @error('tarif')
                             <div class="invalid-feedback">
@@ -98,7 +96,7 @@ is-invalid
                     @method('put')
                     <!-- Kolom From User -->
                     <div class="col-12 mb-3">
-                        <label for="kode" class="form-label">Kode Ruko <span class="text-danger">*</span></label>
+                        <label for="kode" class="form-label">Nama Penyewa <span class="text-danger">*</span></label>
                         <select name="id_penyewa" id="id_penyewa" class="form-select" required>
                             <option selected disabled value="0">Pilih Penyewa...</option>
                             @foreach ($penyewa as $data)
