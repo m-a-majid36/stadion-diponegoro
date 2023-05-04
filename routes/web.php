@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembukuanController;
 use App\Http\Controllers\PenyewaController;
@@ -62,6 +63,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/create', [PembukuanController::class, 'create'])->name('create');
             Route::post('/create', [PembukuanController::class, 'store'])->name('store');
         });
+        Route::resource('inventaris', InventarisController::class);
     });
 });
 
