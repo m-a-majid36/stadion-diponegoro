@@ -19,7 +19,7 @@ class PembayaranController extends Controller
     public function index()
     {
         $pembayaran = Pembayaran::latest()->get();
-        $ruko = Ruko::where('id_penyewa', '!=', 0)->get();
+        $ruko = Ruko::where('id_penyewa', '!=', 0)->orderBy('kode', 'asc')->get();
 
         return view('menu.pembayaran.index', compact('pembayaran', 'ruko'));
     }
