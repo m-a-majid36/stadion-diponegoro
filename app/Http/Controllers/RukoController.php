@@ -16,7 +16,7 @@ class RukoController extends Controller
     public function index()
     {
         $ruko = Ruko::orderBy('kode', 'asc')->get();
-        $penyewa = Penyewa::all();
+        $penyewa = Penyewa::orderBy('nama', 'asc')->get();
 
         return view('menu.ruko.index', compact('ruko', 'penyewa'));
     }
