@@ -47,7 +47,7 @@ class PembayaranController extends Controller
 
         $validatedData['nominal'] = $nominal;
 
-        $bulanini = Pembayaran::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count() + 2;
+        $bulanini = Pembayaran::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->count() + 1;
 
         $validatedData['kode'] = 'Ruko-' . date('m') . '-' . $bulanini;
 
