@@ -19,7 +19,7 @@ class PenyewaController extends Controller
     public function index()
     {
         $penyewa = Penyewa::latest()->get();
-        $rukos = Ruko::where('id_penyewa', '!=', '0')->get();
+        $rukos = Ruko::where('id_penyewa', '!=', '0')->orderBy('kode', 'asc')->get();
 
         return view('menu.penyewa.index', compact('penyewa', 'rukos'));
     }
