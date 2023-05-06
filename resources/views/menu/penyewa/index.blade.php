@@ -45,6 +45,7 @@
                                     <th scope="col" width="65">No.</th>
                                     <th scope="col" class="text-center">Nama</th>
                                     <th scope="col" class="text-center">Nomor Telepon</th>
+                                    <th scope="col" class="text-center">Ruko</th>
                                     <th scope="col" class="text-center">Nama Toko</th>
                                     <th scope="col" class="text-center">Keterangan</th>
                                     <th scope="col" width="100" class="text-center">Status</th>
@@ -59,6 +60,13 @@
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">{{ $data->nama }}</td>
                                         <td style="vertical-align: middle" class="text-center">{{ $data->telepon }}</td>
+                                        <td style="vertical-align: middle" class="text-center">
+                                            @foreach ($rukos as $ruko)
+                                                @if ($ruko->id_penyewa == $data->id)
+                                                    {{ $ruko->kode }}
+                                                @endif
+                                            @endforeach
+                                        </td>
                                         <td style="vertical-align: middle" class="text-center">{{ $data->toko }}</td>
                                         <td style="vertical-align: middle">{{ $data->keterangan }}</td>
                                         <td style="vertical-align: middle" class="text-center">

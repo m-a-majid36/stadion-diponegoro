@@ -7,6 +7,7 @@ use App\Models\Regency;
 use App\Models\Village;
 use App\Models\District;
 use App\Models\Province;
+use App\Models\Ruko;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,8 +19,9 @@ class PenyewaController extends Controller
     public function index()
     {
         $penyewa = Penyewa::latest()->get();
+        $rukos = Ruko::where('id_penyewa', '!=', '0')->get();
 
-        return view('menu.penyewa.index', compact('penyewa'));
+        return view('menu.penyewa.index', compact('penyewa', 'rukos'));
     }
 
     /**
