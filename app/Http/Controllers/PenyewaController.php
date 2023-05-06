@@ -39,7 +39,7 @@ class PenyewaController extends Controller
     {
         $validatedData = $request->validate([
             'nama'          => 'required',
-            'nik'           => 'required|numeric',
+            'nik'           => 'required|unique:penyewas|numeric',
             'telepon'       => 'required|unique:penyewas|min:8|max:20',
             'toko'          => 'required',
             'alamat'        => 'required',
@@ -95,7 +95,7 @@ class PenyewaController extends Controller
     {
         $validatedData = $request->validate([
             'nama'          => 'required',
-            'nik'           => 'required|numeric',
+            'nik'           => 'required|numeric|unique:penyewas,nik,' . $id,
             'telepon'       => 'required|min:8|max:20|unique:penyewas,telepon,' . $id,
             'toko'          => 'required',
             'alamat'        => 'required',

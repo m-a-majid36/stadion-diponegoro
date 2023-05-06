@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
             Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
         });
-        Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'update', 'destroy');
+        Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'destroy');
         Route::get('/pembayaran/ruko/{id_ruko}', [PembayaranController::class, 'getdata'])->name('pembayaran.getdata');
         Route::get('/pembayaran/print/{id}', [PembayaranController::class, 'print'])->name('pembayaran.print');
         Route::prefix('pembukuan')->name('pembukuan.')->group(function() {
@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('/show', [PembukuanController::class, 'show'])->name('show');
             Route::get('/create', [PembukuanController::class, 'create'])->name('create');
             Route::post('/create', [PembukuanController::class, 'store'])->name('store');
+            Route::get('/all/edit/{id}', [PembukuanController::class, 'edit'])->name('edit');
+            Route::put('/all/edit/{id}', [PembukuanController::class, 'update'])->name('update');
+            Route::delete('/all/delete/{id}', [PembukuanController::class, 'destroy'])->name('destroy');
         });
         Route::resource('inventaris', InventarisController::class);
     });

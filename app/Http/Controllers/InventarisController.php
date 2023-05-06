@@ -33,16 +33,16 @@ class InventarisController extends Controller
         $validatedData = $request->validate([
             'nama'      => 'required',
             'tanggal'   => 'required|date',
-            'kode'      => 'required',
+            'kode'      => 'required|unique:inventaris',
             'harga'     => 'required',
             'jumlah'    => 'required|numeric',
         ]);
 
-        $harga = str_replace(array('R','p','.',' '), '', $validatedData['harga']);
+        $harga = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['harga']);
 
         $validatedData['harga'] = $harga;
 
-        if ($request->gambar) {
+        if ($request->file('gambar')) {
             $validatedData['gambar'] = $request->file('gambar')->store('inventaris');
         }
         if ($request->keterangan) {
@@ -79,7 +79,13 @@ class InventarisController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nama'      => 'required',
+            'tanggal'   => 'required|date',
+            'kode'      => 'required|unique:inventaris,kode,' . $id,
+            'harga'     => 'required',
+            'jumlah'    => 'required|numeric',
+        ]);
     }
 
     /**

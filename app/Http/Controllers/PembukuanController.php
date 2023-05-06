@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Pembukuan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Svg\Gradient\Stop;
 
 class PembukuanController extends Controller
 {
@@ -60,9 +62,10 @@ class PembukuanController extends Controller
             'keterangan'    => ''
         ]);
 
-        $nominal = str_replace(array('R','p','.',' '), '', $validatedData['nominal']);
+        $nominal = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['nominal']);
 
         $validatedData['nominal'] = $nominal;
+        $validatedData['id_pembayaran'] = 0;
 
         if ($request->file('gambar')) {
             $validatedData['gambar'] = $request->file('gambar')->store('gambar');
@@ -204,9 +207,11 @@ class PembukuanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function print(string $id)
+    public function edit(string $id)
     {
-        // $pembukuan = Pembukuan
+        $pembukuan = Pembukuan::findOrFail(decrypt($id));
+
+        return view('menu.pembukuan.edit', compact('pembukuan'));
     }
 
     /**
@@ -214,7 +219,28 @@ class PembukuanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'tgl_transaksi' => 'required',
+            'jenis'         => 'required',
+            'nominal'       => 'required',
+            'deskripsi'     => 'required',
+            'gambar'        => 'file',
+            'keterangan'    => ''
+        ]);
+
+        $nominal = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['nominal']);
+        $validatedData['nominal'] = $nominal;
+
+        if($request->file('gambar')) {
+            if($request->oldGambar) {
+                Storage::delete($request->oldGambar);
+            }
+            $validatedData['gambar'] = $request->file('gambar')->store('gambar');
+        }
+
+        Pembukuan::findOrFail($id)->update($validatedData);
+
+        return redirect()->route('pembukuan.all')->with('success', 'Data Transaksi berhasil diperbarui!');
     }
 
     /**
@@ -222,6 +248,14 @@ class PembukuanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pembukuan = Pembukuan::findOrFail($id);
+
+        if ($pembukuan->gambar) {
+            Storage::delete($pembukuan->gambar);
+        }
+
+        $pembukuan->delete();
+
+        return redirect()->route('pembukuan.all')->with('success', 'Data Transaksi berhasil dihapus!');
     }
 }

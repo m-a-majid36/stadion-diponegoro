@@ -95,7 +95,7 @@
                         @enderror
                     </div>
                     <div class="col-12 mb-3">
-                        <label for="bukti_bayar" class="form-label">File tambahan</label>
+                        <label for="bukti_bayar" class="form-label">Gambar (bila ada)</label>
                         <input type="file" name="bukti_bayar" id="bukti_bayar"
                             class="form-control @error('bukti_bayar') is-invalid @enderror">
                         @error('bukti_bayar')

@@ -39,7 +39,7 @@ class RukoController extends Controller
             'tarif'         => 'required'
         ]);
 
-        $tarif = str_replace(array('R','p','.',' '), '', $validatedData['tarif']);
+        $tarif = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['tarif']);
 
         $validatedData['tarif'] = $tarif;
         $validatedData['status'] = 'kosong';
@@ -77,7 +77,7 @@ class RukoController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'kode'  => 'required',
+            'kode'  => 'required|unique:rukos,kode,' . $id,
             'tarif' => 'required|numeric'
         ]);
 

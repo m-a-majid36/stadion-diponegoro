@@ -12,7 +12,7 @@
     }
 
     * {
-        line-height: 1.2em;
+        line-height: 0.8em;
         font-size: 12pt;
         margin: 0;
 
@@ -35,7 +35,7 @@
     }
 
     .margin-bottom {
-        margin-bottom: 1.2em
+        margin-bottom: 0.5em
     }
 
     table {
@@ -44,7 +44,7 @@
     }
 
     table.line-height-table {
-        line-height: 2em
+        line-height: 1em
     }
 
     table .col-center {
@@ -102,6 +102,10 @@
                 <td valign="top"> : {{ $terbilang }}</td>
             </tr>
             <tr>
+                <td valign="top"> Batas pembayaran berikutnya </td>
+                <td valign="top"> : {{ $batas }}</td>
+            </tr>
+            <tr>
                 <td valign="top"> Guna membayar </td>
                 <td valign="top"> : Ruko {{ $pembayaran->ruko->kode }} {{ $pembayaran->keterangan ? '|' : '' }}
                     {{ $pembayaran->keterangan }}</td>
@@ -109,7 +113,7 @@
             <tr>
                 <td valign="bottom">
                     <h4>Terbilang : </h4>
-                    <h3>@rupiah($pembayaran->nominal)</h3>
+                    <h3 style="line-height: 1em">@rupiah($pembayaran->nominal)</h3>
                 </td>
                 <td valign="top" align="right" height="100"> {{ $tanggal }} </td>
             </tr>

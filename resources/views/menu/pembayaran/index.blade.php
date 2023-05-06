@@ -48,7 +48,7 @@
                                     <th scope="col" class="text-center">Nama Penyewa</th>
                                     <th scope="col" class="text-center">Keterangan</th>
                                     <th scope="col" width="100" class="text-center">Status</th>
-                                    <th scope="col" width="150" class="text-center">Aksi</th>
+                                    <th scope="col" width="180" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,6 +79,10 @@
                                             <button class="btn btn-info" data-bs-toggle="modal"
                                                 data-bs-target="#showModal{{ $data->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
+                                            </button>
+                                            <button class="btn btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#editModal{{ $data->id }}">
+                                                <i class="bi bi-pencil-square text-white"></i>
                                             </button>
                                             <a href="{{ route('pembayaran.print', ['id' => encrypt($data->id)]) }}"
                                                 target="blank" class="btn btn-primary text-white"><i

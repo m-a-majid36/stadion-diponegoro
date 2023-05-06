@@ -43,7 +43,7 @@ class PembayaranController extends Controller
             'keterangan'    => ''
         ]);
 
-        $nominal = str_replace(array('R','p','.',' '), '', $validatedData['nominal']);
+        $nominal = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['nominal']);
 
         $validatedData['nominal'] = $nominal;
 
@@ -58,6 +58,8 @@ class PembayaranController extends Controller
         }
 
         $hasil = Pembayaran::create($validatedData);
+        $pembayaran = Pembayaran::latest()->first();
+
         $ruko = Ruko::findOrFail($validatedData['id_ruko']);
         $penyewa = Penyewa::findOrFail($ruko->id_penyewa);
 
@@ -95,6 +97,7 @@ class PembayaranController extends Controller
 
         if ($request->file('bukti_bayar')) {
             Pembukuan::create([
+                'id_pembayaran' => $pembayaran->id,
                 'jenis'         => 'D',
                 'nominal'       => $validatedData['nominal'],
                 'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
@@ -104,6 +107,7 @@ class PembayaranController extends Controller
             ]);
         } else {
             Pembukuan::create([
+                'id_pembayaran' => $pembayaran->id,
                 'jenis'         => 'D',
                 'nominal'       => $validatedData['nominal'],
                 'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
@@ -117,6 +121,81 @@ class PembayaranController extends Controller
         } else {
             return redirect()->route('pembayaran.index')->with('error', 'Pembayaran gagal ditambahkan!');
         }
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $validatedData = $request->validate([
+            'nominal'       => 'required',
+            'status'        => 'required',
+            'deadline'      => 'required',
+            'keterangan'    => ''
+        ]);
+
+        $nominal = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['nominal']);
+
+        $validatedData['nominal'] = $nominal;
+
+        if ($request->file('bukti_bayar')) {
+            if ($request->oldGambar) {
+                Storage::delete($request->oldGambar);
+            }
+            $validatedData['file'] = $request->file('bukti_bayar')->store('bukti_bayar');
+        }
+
+        Pembayaran::whereId($id)->update($validatedData);
+        $pembayaran = Pembayaran::findOrFail($id);
+        $ruko = Ruko::findOrFail($pembayaran->id_ruko);
+        $penyewa = Penyewa::findOrFail($pembayaran->id_penyewa);
+
+        if ($validatedData['status'] == 'cicil') {
+            $deskripsi = 'Pembayaran sebagian';
+            $ruko->update([
+                'deadline' => $validatedData['deadline'],
+                'status' => 'cicil'
+            ]);
+            $penyewa->update([
+                'selesai' => $validatedData['deadline'],
+                'status' => 'cicil',
+            ]);
+        } elseif ($validatedData['status'] == 'baru') {
+            $deskripsi = 'Tanda Jadi';
+            $ruko->update([
+                'deadline' => $validatedData['deadline'],
+                'status' => 'baru'
+            ]);
+            $penyewa->update([
+                'selesai' => $validatedData['deadline'],
+                'status' => 'baru',
+            ]);
+        } elseif ($validatedData['status'] == 'lunas') {
+            $deskripsi = 'Pelunasan';
+            $ruko->update([
+                'deadline' => $validatedData['deadline'],
+                'status' => 'lunas'
+            ]);
+            $penyewa->update([
+                'selesai' => $validatedData['deadline'],
+                'status' => 'lunas',
+            ]);
+        }
+
+        if ($request->file('bukti_bayar')) {
+            Pembukuan::where('id_pembayaran', '=', $id)->update([
+                'nominal'       => $validatedData['nominal'],
+                'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
+                'gambar'        => $validatedData['file'],
+                'keterangan'    => $validatedData['keterangan']
+            ]);
+        } else {
+            Pembukuan::where('id_pembayaran', '=', $id)->update([
+                'nominal'       => $validatedData['nominal'],
+                'deskripsi'     => $deskripsi . ' Ruko ' . $ruko->kode,
+                'keterangan'    => $validatedData['keterangan']
+            ]);
+        }
+
+        return redirect()->route('pembayaran.index')->with('success', 'Data Pembayaran berhasil diperbarui!');
     }
 
     public function print(string $id)
@@ -149,13 +228,39 @@ class PembayaranController extends Controller
             $bulan = 'Desember';
         }
 
+        if (date('m', strtotime($pembayaran->deadline)) == "01") {
+            $bulandeadline = 'Januari';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "02") {
+            $bulandeadline = 'Februari';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "03") {
+            $bulandeadline = 'Maret';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "04") {
+            $bulandeadline = 'April';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "05") {
+            $bulandeadline = 'Mei';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "06") {
+            $bulandeadline = 'Juni';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "07") {
+            $bulandeadline = 'Juli';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "08") {
+            $bulandeadline = 'Agustus';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "09") {
+            $bulandeadline = 'September';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "10") {
+            $bulandeadline = 'Oktober';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "11") {
+            $bulandeadline = 'November';
+        } elseif (date('m', strtotime($pembayaran->deadline)) == "12") {
+            $bulandeadline = 'Desember';
+        }
+
         $terbilang = ucwords(''.$this->Terbilang($pembayaran->nominal).'')." Rupiah"; 
         $tanggal = 'Semarang, ' . date('d', strtotime($pembayaran->created_at)) . ' ' . $bulan . ' ' . date('Y', strtotime($pembayaran->created_at));
+        $batas = date('d', strtotime($pembayaran->deadline)) . ' ' . $bulandeadline . ' ' . date('Y', strtotime($pembayaran->deadline));
 
-        $pdf = Pdf::loadView('menu.pembayaran.print', compact('pembayaran', 'tanggal', 'terbilang'))->setPaper('a4', 'potrait');
+        $pdf = Pdf::loadView('menu.pembayaran.print', compact('pembayaran', 'tanggal', 'terbilang', 'batas'))->setPaper('a4', 'potrait');
 
-        return $pdf->download("Kuitansi " . $pembayaran->kode . " " . date('d-m-Y', strtotime($pembayaran->created_at)) . ".pdf");
-        // return view('menu.pembayaran.print', compact('pembayaran', 'tanggal', 'terbilang'));
+        return $pdf->download("Kuitansi " . $pembayaran->kode . " " . date('d', strtotime($pembayaran->created_at)) . '-' . $bulan . '-' . date('Y', strtotime($pembayaran->created_at)) . ".pdf");
     }
 
     public function Terbilang($x)
@@ -187,4 +292,5 @@ class PembayaranController extends Controller
 
         return response()->json(['penyewa' => $penyewa]);
     }
+
 }

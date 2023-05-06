@@ -46,7 +46,7 @@
                     data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ route('pembukuan.all') }}"
-                            class="{{ Request::is('pembukuan/all') ? 'active' : '' }}">
+                            class="{{ Request::is('pembukuan/all*') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Pembukuan Keseluruhan</span>
                         </a>
                     </li>

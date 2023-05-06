@@ -133,6 +133,16 @@
                                                 data-bs-target="#showModal{{ $pembukuan->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
+                                            @if ($pembukuan->id_pembayaran == 0)
+                                                <a href="{{ route('pembukuan.edit', ['id' => encrypt($pembukuan->id)]) }}"
+                                                    class="btn btn-warning">
+                                                    <i class="bi bi-pencil-square text-white"></i>
+                                                </a>
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $pembukuan->id }}">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     @include('menu.pembukuan.modal')
