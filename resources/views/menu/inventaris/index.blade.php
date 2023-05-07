@@ -71,7 +71,7 @@
                                                 data-bs-target="#showModal{{ $data->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
-                                            <a href="{{ route('inventaris.edit', ['inventaris' => encrypt($data->id)]) }}"
+                                            <a href="{{ route('inventaris.edit', ['inventari' => encrypt($data->id)]) }}"
                                                 class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                                             </a>
                                             <button class="btn btn-danger" data-bs-toggle="modal"

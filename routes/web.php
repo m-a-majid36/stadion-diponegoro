@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::put('/all/edit/{id}', [PembukuanController::class, 'update'])->name('update');
             Route::delete('/all/delete/{id}', [PembukuanController::class, 'destroy'])->name('destroy');
         });
-        Route::resource('inventaris', InventarisController::class);
+        Route::resource('inventaris', InventarisController::class)->except('show');
     });
 });
 

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventaris;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class InventarisController extends Controller
 {
@@ -59,19 +61,13 @@ class InventarisController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $inventaris = Inventaris::findOrFail(decrypt($id));
+
+        return view('menu.inventaris.edit', compact('inventaris'));
     }
 
     /**
@@ -85,7 +81,27 @@ class InventarisController extends Controller
             'kode'      => 'required|unique:inventaris,kode,' . $id,
             'harga'     => 'required',
             'jumlah'    => 'required|numeric',
+            'keterangan'=> '',
         ]);
+
+        $harga = str_replace(array('R','p','.',' ',',','-'), '', $validatedData['harga']);
+
+        $validatedData['harga'] = $harga;
+
+        if ($request->file('gambar')) {
+            if ($request->oldGambar) {
+                Storage::delete($request->oldGambar);
+            }
+            $validatedData['gambar'] = $request->file('gambar')->store('inventaris');
+        }
+
+        $hasil = Inventaris::findOrFail($id)->update($validatedData);
+
+        if ($hasil) {
+            return redirect()->route('inventaris.index')->with('success', 'Data inventaris berhasil diperbarui!');
+        } else {
+            return redirect()->route('iventaris.index')->with('error', 'Data berhasil gagal diperbarui!');
+        }
     }
 
     /**
@@ -93,6 +109,14 @@ class InventarisController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $inventaris = Inventaris::findOrFail($id);
+
+        if ($inventaris->gambar) {
+            Storage::delete($inventaris->gambar);
+        }
+
+        $inventaris->delete();
+
+        return redirect()->route('inventaris.index')->with('success', 'Data inventaris berhasil dihapus!');
     }
 }

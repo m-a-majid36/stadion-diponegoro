@@ -66,7 +66,7 @@
                 </ul>
             </li><!-- End Data Pembukuan -->
 
-            {{-- <li class="nav-heading">Inventaris</li>
+            <li class="nav-heading">Inventaris</li>
             <!-- Data Inventaris -->
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('inventaris*') ? '' : 'collapsed' }}"
@@ -74,7 +74,7 @@
                     <i class="bi bi-box-seam"></i>
                     <span>Data Inventaris</span>
                 </a>
-            </li><!-- End Data Inventaris --> --}}
+            </li><!-- End Data Inventaris -->
         @elseif (Auth::user()->role == 'M')
         @else
             <li class="nav-heading">Stadion</li>
