@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Pembukuan;
-use App\Providers\AppServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -120,6 +121,46 @@ class DashboardController extends Controller
 
     public function profile()
     {
-        return view('menu.profile');
+        $user = User::findOrFail(Auth::user()->id);
+
+        return view('menu.profile', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name'      => 'required',
+            'email'     => 'required|unique:users,email,' . Auth::user()->id,
+            'username'  => 'required|unique:users,username,' . Auth::user()->id,
+        ]);
+
+        User::findOrFail(Auth::user()->id)->update($validatedData);
+
+        return redirect()->route('dashboard.profile')->with('success', 'Profil Anda berhasil diperbarui!');
+    }
+
+    public function password(Request $request)
+    {
+        $validatedData = $request->validate([
+            'password_old'      => 'required',
+            'password_new'      => 'required',
+            'password_confirm'  => 'required',
+        ]);
+
+        if (!Hash::check($validatedData['password_old'], Auth::user()->password)) {
+            return redirect()->route('dashboard.profile')->with('error', 'Password lama Anda salah!');
+        }
+
+        if (Hash::check($validatedData['password_new'], Auth::user()->password)) {
+            return redirect()->route('dashboard.profile')->with('warning', 'Password baru Anda sama dengan password lama!');
+        }
+
+        if ($validatedData['password_new'] != $validatedData['password_confirm']) {
+            return redirect()->route('dashboard.profile')->with('error', 'Konfirmasi Password Anda berbeda!');
+        }
+        
+        User::whereId(Auth::user()->id)->update(['password' => Hash::make($validatedData['password_new'])]);
+
+        return redirect()->route('dashboard.profile')->with('success', 'Password Anda berhasil diperbarui!');
     }
 }

@@ -7,7 +7,6 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembukuanController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
-use App\Models\Pembukuan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +39,11 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout')->middle
 Route::group(['middleware' => 'auth'], function() {
     #Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::prefix('/dashboard')->name('dashboard.')->group(function() {
+        Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+        Route::put('/update', [DashboardController::class, 'update'])->name('update');
+        Route::put('/password', [DashboardController::class, 'password'])->name('password');
+    });
 
     Route::group(['middleware' => 'role:A'], function() {
         #Ruko

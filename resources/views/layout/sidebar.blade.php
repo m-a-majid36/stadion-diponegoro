@@ -66,6 +66,24 @@
                 </ul>
             </li><!-- End Data Pembukuan -->
 
+            {{-- <li class="nav-heading">Karyawan</li>
+            <!-- Data Karyawan -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('inventaris*') ? '' : 'collapsed' }}"
+                    href="{{ route('inventaris.index') }}">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Data Karyawan</span>
+                </a>
+            </li><!-- End Data Karyawan -->
+            <!-- Data Penggajian -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('inventaris*') ? '' : 'collapsed' }}"
+                    href="{{ route('inventaris.index') }}">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Data Penggajian</span>
+                </a>
+            </li><!-- End Data Penggajian --> --}}
+
             <li class="nav-heading">Inventaris</li>
             <!-- Data Inventaris -->
             <li class="nav-item">
