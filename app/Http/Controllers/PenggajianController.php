@@ -32,7 +32,7 @@ class PenggajianController extends Controller
             return redirect()->route('penggajian.index')->with('error', 'Tanggal awal periode tidak boleh kosong!');
         } elseif ($request['akhir'] == null) {
             return redirect()->route('penggajian.index')->with('error', 'Tanggal akhir periode tidak boleh kosong!');
-        } elseif ($request['akhir'] > $request['awal']) {
+        } elseif ($request['akhir'] < $request['awal']) {
             return redirect()->route('penggajian.index')->with('error', 'Tanggal awal tidak boleh lebih kecil daripada tanggal akhir!');
         }
 
