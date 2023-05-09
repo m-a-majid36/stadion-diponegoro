@@ -50,4 +50,9 @@ class Village extends Model
     {
         return $this->hasMany(Penyewa::class);
     }
+
+    public function karyawans()
+    {
+        return $this->hasMany(Karyawan::class);
+    }
 }

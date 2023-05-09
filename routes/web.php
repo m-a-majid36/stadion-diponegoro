@@ -3,8 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PembukuanController;
+use App\Http\Controllers\PenggajianController;
 use App\Http\Controllers\PenyewaController;
 use App\Http\Controllers\RukoController;
 use Illuminate\Support\Facades\Auth;
@@ -51,10 +53,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::put('/ruko/sewa/{ruko}', [RukoController::class, 'sewa'])->name('ruko.sewa');
         Route::put('/ruko/lepas/{ruko}', [RukoController::class, 'lepas'])->name('ruko.lepas');
         Route::resource('penyewa', PenyewaController::class)->except('show');
-        Route::prefix('penyewa')->group(function() {
-            Route::post('/getregencies', [PenyewaController::class, 'get_regencies'])->name('penyewa.regencies');
-            Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('penyewa.districts');
-            Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('penyewa.villages');
+        Route::prefix('penyewa')->name('penyewa.')->group(function() {
+            Route::post('/getregencies', [PenyewaController::class, 'get_regencies'])->name('regencies');
+            Route::post('/getdistricts', [PenyewaController::class, 'get_districts'])->name('districts');
+            Route::post('/getvillages', [PenyewaController::class, 'get_villages'])->name('villages');
         });
         Route::resource('pembayaran', PembayaranController::class)->except('create', 'edit', 'destroy');
         Route::get('/pembayaran/ruko/{id_ruko}', [PembayaranController::class, 'getdata'])->name('pembayaran.getdata');
@@ -69,6 +71,18 @@ Route::group(['middleware' => 'auth'], function() {
             Route::put('/all/edit/{id}', [PembukuanController::class, 'update'])->name('update');
             Route::delete('/all/delete/{id}', [PembukuanController::class, 'destroy'])->name('destroy');
         });
+
+        #Karyawan
+        Route::resource('karyawan', KaryawanController::class)->except('show');
+        Route::prefix('karyawan')->name('karyawan.')->group(function() {
+            Route::post('/getregencies', [KaryawanController::class, 'get_regencies'])->name('regencies');
+            Route::post('/getdistricts', [KaryawanController::class, 'get_districts'])->name('districts');
+            Route::post('/getvillages', [KaryawanController::class, 'get_villages'])->name('villages');
+        });
+        Route::resource('penggajian', PenggajianController::class)->except('show', 'edit', 'destroy');
+        Route::get('/penggajian/print/{id}', [PenggajianController::class, 'print'])->name('penggajian.print');
+
+        #Inventaris
         Route::resource('inventaris', InventarisController::class)->except('show');
     });
 });

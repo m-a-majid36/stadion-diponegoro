@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pembukuans', function (Blueprint $table) {
-            $table->foreignId('id_pembayaran')->nullable();
+            $table->foreignId('id_penggajian')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pembukuans', function (Blueprint $table) {
-            $table->foreignId('id_pembayaran');
+            $table->foreignId('id_penggajian');
         });
     }
 };

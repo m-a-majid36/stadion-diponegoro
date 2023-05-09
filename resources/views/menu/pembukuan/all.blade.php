@@ -133,7 +133,7 @@
                                                 data-bs-target="#showModal{{ $pembukuan->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
-                                            @if ($pembukuan->id_pembayaran == 0)
+                                            @if ($pembukuan->id_pembayaran == null && $pembukuan->id_penggajian == null)
                                                 <a href="{{ route('pembukuan.edit', ['id' => encrypt($pembukuan->id)]) }}"
                                                     class="btn btn-warning">
                                                     <i class="bi bi-pencil-square text-white"></i>

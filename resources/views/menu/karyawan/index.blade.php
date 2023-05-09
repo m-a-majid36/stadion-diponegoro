@@ -1,15 +1,15 @@
 @extends('layout.app')
-@section('title', 'Inventaris')
+@section('title', 'Karyawan')
 @section('content')
     <!-- Content -->
     <main id="main" class="main">
         <!-- Page Title -->
         <div class="pagetitle">
-            <h1>Data Inventaris</h1>
+            <h1>Data Karyawan</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Data Inventaris</li>
+                    <li class="breadcrumb-item active">Data Karyawan</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -18,10 +18,10 @@
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Data Inventaris</h5>
+                        <h5 class="card-title">Data Karyawan</h5>
                         <div>
-                            <a href="{{ route('inventaris.create') }}" class="btn btn-success mb-3"><i
-                                    class="bi bi-plus-circle text-white"></i>&nbsp; Tambah Inventaris</a>
+                            <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3"><i
+                                    class="bi bi-person-plus text-white"></i>&nbsp; Tambah Karyawan</a>
                         </div>
                         @if (session()->has('success'))
                             <div class="alert alert-success alert-dismissible fade show">
@@ -43,44 +43,49 @@
                             <thead>
                                 <tr>
                                     <th scope="col" width="65">No.</th>
-                                    <th scope="col" class="text-center">Kode Inventaris</th>
-                                    <th scope="col" class="text-center">Nama Barang</th>
-                                    <th scope="col" class="text-center">Tanggal Pengadaan</th>
-                                    <th scope="col" class="text-center">Harga Satuan</th>
-                                    <th scope="col" class="text-center">Jumlah Barang</th>
+                                    <th scope="col" class="text-center">Nama</th>
+                                    <th scope="col" class="text-center">Nomor Telepon</th>
+                                    <th scope="col" class="text-center">Mulai Kerja</th>
                                     <th scope="col" class="text-center">Keterangan</th>
-                                    <th scope="col" width="180" class="text-center">Aksi</th>
+                                    <th scope="col" width="100" class="text-center">Status</th>
+                                    <th scope="col" width="200" class="text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($inventaris as $data)
+                                @foreach ($karyawan as $data)
                                     <tr>
                                         <td style="vertical-align: middle" class="text-center">
                                             <strong>{{ $loop->iteration }}</strong>
                                         </td>
-                                        <td style="vertical-align: middle" class="text-center">{{ $data->kode }}</td>
-                                        <td style="vertical-align: middle">{{ $data->nama }}
-                                        </td>
+                                        <td style="vertical-align: middle" class="text-center">{{ $data->nama }}</td>
+                                        <td style="vertical-align: middle" class="text-center">{{ $data->telepon }}</td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            {{ date('d-m-Y', strtotime($data->tanggal)) }}</td>
-                                        <td style="vertical-align: middle" class="text-end">@rupiah($data->harga)</td>
-                                        <td style="vertical-align: middle" class="text-center">{{ $data->jumlah }}</td>
+                                            {{ date('d-m-Y', strtotime($data->mulai)) }}</td>
                                         <td style="vertical-align: middle">{{ $data->keterangan }}</td>
+                                        <td style="vertical-align: middle" class="text-center">
+                                            @if ($data->status == 'A')
+                                                <span class="badge bg-primary">Aktif</span>
+                                            @elseif ($data->status == 'N')
+                                                <span class="badge bg-secondary">Tidak Aktif</span>
+                                            @endif
+                                        </td>
                                         <td style="vertical-align: middle" class="text-center">
                                             <button class="btn btn-info" data-bs-toggle="modal"
                                                 data-bs-target="#showModal{{ $data->id }}">
                                                 <i class="bi bi-eye-fill text-white"></i>
                                             </button>
-                                            <a href="{{ route('inventaris.edit', ['inventari' => encrypt($data->id)]) }}"
+                                            <a href="{{ route('karyawan.edit', ['karyawan' => encrypt($data->id)]) }}"
                                                 class="btn btn-primary"><i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <button class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal{{ $data->id }}">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            @if ($data->status == 'N')
+                                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $data->id }}">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
-                                    @include('menu.inventaris.modal')
+                                    @include('menu.karyawan.modal')
                                 @endforeach
                             </tbody>
                         </table>

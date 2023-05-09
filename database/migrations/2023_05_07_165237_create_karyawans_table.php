@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penyewas', function (Blueprint $table) {
+        Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('nik')->unique();
-            $table->string('ktp');
-            $table->text('alamat');
-            $table->foreignId('province_id');
-            $table->foreignId('regency_id');
-            $table->foreignId('district_id');
-            $table->foreignId('village_id');
-            $table->string('telepon')->unique();
-            $table->string('toko');
+            $table->string('nik')->nullable();
+            $table->string('ktp')->nullable();
+            $table->string('telepon')->nullable();
+            $table->text('alamat')->nullable();
+            $table->foreignId('province_id')->nullable();
+            $table->foreignId('regency_id')->nullable();
+            $table->foreignId('district_id')->nullable();
+            $table->foreignId('village_id')->nullable();
             $table->string('status');
-            $table->date('mulai');
+            $table->date('mulai')->nullable();
             $table->date('selesai')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penyewas');
+        Schema::dropIfExists('karyawans');
     }
 };
