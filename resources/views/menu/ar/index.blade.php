@@ -58,17 +58,16 @@
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if (date('Y-m-d')->diff(date('Y-m-d', strtotime($data->deadline)))->d > 0)
+                                            @if (now()->diffInDays($data->deadline) > 0)
                                                 <span class="badge bg-danger">Unpaid</span>
-                                            @elseif (date('Y-m-d')->diff(date('Y-m-d', strtotime($data->deadline)))->d < -8)
+                                            @elseif (now()->diffInDays($data->deadline) < -8)
                                                 <span class="badge bg-success">Paid</span>
-                                            @elseif (date('Y-m-d')->diff(date('Y-m-d', strtotime($data->deadline)))->d <= 0 &&
-                                                    date('Y-m-d')->diff(date('Y-m-d', strtotime($data->deadline)))->d > -7)
+                                            @elseif (now()->diffInDays($data->deadline) <= 0 && now()->diffInDays($data->deadline) > -7)
                                                 <span class="badge bg-warning">Waiting</span>
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            {{ date('Y-m-d')->diff(date('Y-m-d', strtotime($data->deadline)))->d }}
+                                            {{ now()->diffInDays($data->deadline) }}
                                         </td>
                                     </tr>
                                 @endforeach
