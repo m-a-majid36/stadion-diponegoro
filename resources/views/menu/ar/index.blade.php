@@ -58,25 +58,33 @@
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if (now() <= $data->deadline)
-                                                @if (now()->diffInDays($data->deadline) <= 7)
-                                                    <span class="badge bg-warning">Waiting</span>
-                                                @elseif (now()->diffInDays($data->deadline) > 7)
-                                                    <span class="badge bg-success">Paid</span>
+                                            @if ($data->id_penyewa == 0)
+                                                <span class="badge bg-secondary">Kosong</span>
+                                            @else
+                                                @if (now() <= $data->deadline)
+                                                    @if (now()->diffInDays($data->deadline) <= 7)
+                                                        <span class="badge bg-warning">Waiting</span>
+                                                    @elseif (now()->diffInDays($data->deadline) > 7)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @endif
+                                                @elseif (now() > $data->deadline)
+                                                    <span class="badge bg-danger">Unpaid</span>
                                                 @endif
-                                            @elseif (now() > $data->deadline)
-                                                <span class="badge bg-danger">Unpaid</span>
                                             @endif
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
-                                            @if (now() <= $data->deadline)
-                                                @if (now()->diffInDays($data->deadline) == 0)
-                                                    -1
-                                                @else
-                                                    {{ '-' . now()->diffInDays($data->deadline) }}
+                                            @if ($data->id_penyewa == 0)
+                                                Kosong
+                                            @else
+                                                @if (now() <= $data->deadline)
+                                                    @if (now()->diffInDays($data->deadline) == 0)
+                                                        -1
+                                                    @else
+                                                        {{ '-' . now()->diffInDays($data->deadline) }}
+                                                    @endif
+                                                @elseif (now() > $data->deadline)
+                                                    {{ now()->diffInDays($data->deadline) }}
                                                 @endif
-                                            @elseif (now() > $data->deadline)
-                                                {{ now()->diffInDays($data->deadline) }}
                                             @endif
                                         </td>
                                     </tr>
