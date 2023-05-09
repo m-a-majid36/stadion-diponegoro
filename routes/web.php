@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ARController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventarisController;
@@ -71,6 +72,7 @@ Route::group(['middleware' => 'auth'], function() {
             Route::put('/all/edit/{id}', [PembukuanController::class, 'update'])->name('update');
             Route::delete('/all/delete/{id}', [PembukuanController::class, 'destroy'])->name('destroy');
         });
+        Route::get('/ar/index', [ARController::class, 'index'])->name('ar.index');
 
         #Karyawan
         Route::resource('karyawan', KaryawanController::class)->except('show');

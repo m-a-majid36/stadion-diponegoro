@@ -53,6 +53,13 @@
                     <span>Pembayaran</span>
                 </a>
             </li><!-- End Data Pembayaran -->
+            <!-- Data ar -->
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('ar*') ? '' : 'collapsed' }}" href="{{ route('ar.index') }}">
+                    <i class="bi bi-piggy-bank"></i>
+                    <span>Accounts Receivable (AR)</span>
+                </a>
+            </li><!-- End Data Pembayaran -->
             <!-- Data Pembukuan -->
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('pembukuan*') ? '' : 'collapsed' }}" data-bs-target="#components-nav"
