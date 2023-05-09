@@ -70,7 +70,11 @@
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
                                             @if (now() <= $data->deadline)
-                                                {{ '-' . now()->diffInDays($data->deadline) }}
+                                                @if (now()->diffInDays($data->deadline) == 0)
+                                                    -1
+                                                @else
+                                                    {{ '-' . now()->diffInDays($data->deadline) }}
+                                                @endif
                                             @elseif (now() > $data->deadline)
                                                 {{ now()->diffInDays($data->deadline) }}
                                             @endif
