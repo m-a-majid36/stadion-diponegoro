@@ -59,8 +59,8 @@ class PembayaranController extends Controller
         $hasil = Pembayaran::create($validatedData);
         $pembayaran = Pembayaran::latest()->first();
 
-        $ruko = Ruko::findOrFail($validatedData['id_ruko']);
-        $penyewa = Penyewa::findOrFail($ruko->id_penyewa);
+        $ruko = Ruko::findOrFail($pembayaran->id_ruko);
+        $penyewa = Penyewa::findOrFail($pembayaran->id_penyewa);
 
         if ($validatedData['status'] == 'cicil') {
             $deskripsi = 'Pembayaran sebagian';
