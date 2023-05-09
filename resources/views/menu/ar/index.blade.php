@@ -61,7 +61,7 @@
                                             @if (now() <= $data->deadline)
                                                 @if (now()->diffInDays($data->deadline) <= 7)
                                                     <span class="badge bg-warning">Waiting</span>
-                                                @else
+                                                @elseif (now()->diffInDays($data->deadline) > 7)
                                                     <span class="badge bg-success">Paid</span>
                                                 @endif
                                             @elseif (now() > $data->deadline)
@@ -70,9 +70,9 @@
                                         </td>
                                         <td style="vertical-align: middle" class="text-center">
                                             @if (now() <= $data->deadline)
-                                                {{ now()->diffInDays($data->deadline) }}
-                                            @elseif (now() > $data->deadline)
                                                 {{ '-' . now()->diffInDays($data->deadline) }}
+                                            @elseif (now() > $data->deadline)
+                                                {{ now()->diffInDays($data->deadline) }}
                                             @endif
                                         </td>
                                     </tr>
