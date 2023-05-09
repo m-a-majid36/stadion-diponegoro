@@ -9,7 +9,7 @@ class ARController extends Controller
 {
     public function index()
     {
-        $ruko = Ruko::orderBy('kode', 'asc')->get();
+        $ruko = Ruko::all()->sortBy('kode');
 
         return view('menu.ar.index', compact('ruko'));
     }
