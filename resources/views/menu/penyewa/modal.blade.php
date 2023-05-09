@@ -76,12 +76,18 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-4 label">Selesai Sewa</div>
                                 <div class="col-lg-8 col-md-8">
-                                    <strong class="text-primary">:
-                                    </strong>
+                                    <strong class="text-primary">:</strong>
                                     @if ($data->selesai)
                                         {{ date('d-m-Y', strtotime($data->selesai)) }}
-                                    @else
                                     @endif
+                                </div>
+                            </div>
+                        @else
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 label">Deadline Bayar</div>
+                                <div class="col-lg-8 col-md-8">
+                                    <strong class="text-primary">:</strong>
+                                    {{ date('d-m-Y', strtotime($data->selesai)) }}
                                 </div>
                             </div>
                         @endif
