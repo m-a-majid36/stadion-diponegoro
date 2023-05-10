@@ -36,7 +36,7 @@ class PembayaranController extends Controller
             'id_ruko'       => 'required',
             'id_penyewa'    => 'required',
             'nominal'       => 'required',
-            'deadline'      => 'required|date',
+            'deadline'      => 'required',
             'status'        => 'required',
             'bukti_bayar'   => 'file',
             'keterangan'    => ''
