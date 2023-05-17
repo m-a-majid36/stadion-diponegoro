@@ -71,7 +71,7 @@
                                         <div class="ps-3">
                                             <h6>@rupiah($totalKredit)</h6>
                                             {{-- <span class="text-success small pt-1 fw-bold">8%</span> --}}
-                                            <span class="text-danger small pt-1 fw-bold">Total Debit</span>
+                                            <span class="text-danger small pt-1 fw-bold">Total Kredit</span>
                                         </div>
                                     </div>
                                 </div>
